@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر إلكتروني</title>
+    <style>
+        /* إعادة تعيين أنماط افتراضية */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* الأنماط الأساسية */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #372398;
+            color: #282a8b;
+            direction: rtl; /* اتجاه الكتابة من اليمين لليسار */
+            text-align: right; /* محاذاة النصوص لليمين */
+        }
+
+        /* رأس الصفحة */
+        header {
+            background-color: #271983;
+            color: #fff;
+            padding: 1rem 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        header h1 {
+            font-size: 1.75rem;
+            color: #ffcc00;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ffcc00;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* قسم البطل */
+        .hero {
+            background: #1b408a;
+            color: #fff;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-top: 0.5rem;
+            line-height: 1.8;
+        }
+
+        /* قسم المنتجات */
+        .products {
+            padding: 2rem 1rem;
+            background-color: #fff;
+        }
+
+        .products .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .product {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            flex: 1 1 calc(33.333% - 1.5rem);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .product h3 {
+            margin: 0.5rem 0;
+            font-size: 1.25rem;
+            color: #333;
+        }
+
+        .product span {
+            display: block;
+            margin-top: 0.5rem;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+
+        .product:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* تذييل الصفحة */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* استجابة التصميم */
+        @media (max-width: 768px) {
+            .product-grid {
+                flex-direction: column;
+            }
+            
+            .product {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>متجر إلكتروني</h1>
+            <nav>
+                <ul>
+                    <li><a href="#">الرئيسية</a></li>
+                    <li><a href="#">المنتجات</a></li>
+                    <li><a href="#">اتصل بنا</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>مرحبا بكم في متجرنا!</h2>
+                <p>تسوق الآن واستمتع بأفضل العروض.</p>
+            </div>
+        </section>
+        <section class="products">
+            <div class="container">
+                <h2>المنتجات</h2>
+                <div class="product-grid">
+                    <!-- المنتجات سيتم تحميلها هنا بواسطة JavaScript -->
+                </div>
+            </div>
+        </section>
+        <!-- إضافة قسم لعرض البيانات من API -->
+        <section class="posts">
+            <div class="container">
+                <h2>المدونات</h2>
+                <ul id="posts-list"></ul>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 متجر إلكتروني. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", async function() {
+            const productsContainer = document.querySelector('.product-grid');
+            if (!productsContainer) {
+                console.error('Element .product-grid not found');
+                return;
+            }
+
+            async function fetchProducts() {
+                try {
+                    console.log('Fetching products...');
+                    const response = await fetch('http://localhost:1337/api/posts?populate=*'); // استبدل بعنوان API الخاص بك
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    console.log('Products fetched successfully:', data);
+
+                    data.data.forEach(product => {
+                        const imageUrl = product.attributes.image.data 
+                            ? `http://localhost:1337${product.attributes.image.data.attributes.url}`
+                            : 'fallback-image.jpg';
+
+                        const productDiv = document.createElement('div');
+                        productDiv.className = 'product'; // تأكد من وجود تنسيق لهذه الفئة في CSS
+                        productDiv.innerHTML = `
+                            <a href="product-details.html?productName=${encodeURIComponent(product.attributes.title)}&productImage=${encodeURIComponent(imageUrl)}&productDescription=${encodeURIComponent(product.attributes.body)}&productPrice=${encodeURIComponent(product.attributes.price)}" style="text-decoration: none; color: inherit;">
+                                <img src="${imageUrl}" alt="${product.attributes.title}">
+                                <h3>${product.attributes.title}</h3>
+                                <p>${product.attributes.body}</p>
+                                <span>${product.attributes.price}</span>
+                            </a>
+                        `;
+                        productsContainer.appendChild(productDiv);
+                    });
+                } catch (error) {
+                    console.error('Error fetching products:', error);
+                }
+            }
+
+            await fetchProducts();
+        });
+    </script>
+</body>
+</html>

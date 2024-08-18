@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلب المنتج</title>
+    <style>
+        /* إعادة تعيين أنماط افتراضية */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* الأنماط الأساسية */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+            color: #333;
+            direction: rtl; /* اتجاه الكتابة من اليمين لليسار */
+            text-align: right; /* محاذاة النصوص لليمين */
+        }
+
+        /* رأس الصفحة */
+        header {
+            background-color: #282c34;
+            color: #ffffff;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        header h1 {
+            font-size: 1.75rem;
+            margin: 0;
+            color: #ffcc00;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: flex-end; /* محاذاة العناصر لليمين */
+        }
+
+        nav ul li {
+            margin-right: 1.5rem; /* تغيير إلى margin-right للكتابة من اليمين */
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffcc00;
+        }
+
+        /* قسم التفاصيل */
+        .product-details {
+            background: #ffffff;
+            padding: 2rem 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 1rem auto;
+            max-width: 900px;
+            border-radius: 8px;
+        }
+
+        .product-details .container {
+            text-align: right; /* محاذاة النصوص لليمين */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* محاذاة المحتوى في المركز */
+        }
+
+        .product-details img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 1rem 0; /* إضافة تباعد حول الصورة */
+        }
+
+        .product-details h2 {
+            margin: 1rem 0;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .product-details p {
+            color: #555;
+            margin: 0.5rem 0;
+            font-size: 1.25rem;
+        }
+
+        /* قسم النموذج */
+        .purchase-form {
+            background: #ffffff;
+            padding: 2rem 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 1rem;
+            border-radius: 8px;
+        }
+
+        .purchase-form .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .purchase-form h2 {
+            margin-bottom: 1rem;
+            font-size: 1.75rem;
+            color: #333;
+        }
+
+        .purchase-form label {
+            display: block;
+            margin: 1rem 0 0.5rem;
+            color: #333;
+            font-size: 1.125rem;
+        }
+
+        .purchase-form input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            text-align: right; /* محاذاة النصوص لليمين في الحقول */
+        }
+
+        .purchase-form input:focus {
+            border-color: #ffcc00;
+            box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+            outline: none;
+        }
+
+        .purchase-form button {
+            background: #282c34;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .purchase-form button:hover {
+            background: #333;
+            transform: scale(1.05);
+        }
+
+        .error {
+            color: #d9534f;
+            font-size: 0.875rem;
+            display: block;
+            margin-top: 0.5rem;
+        }
+
+        .success-message {
+            color: #5bc0de;
+            font-size: 1rem;
+            margin-top: 1rem;
+          
+            
+        }
+
+        /* تذييل الصفحة */
+        footer {
+            background-color: #282c34;
+            color: #ffffff;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* استجابة التصميم */
+        @media (max-width: 768px) {
+            header .container,
+            .product-details .container,
+            .purchase-form .container {
+                padding: 0 0.5rem;
+            }
+
+            .purchase-form button {
+                font-size: 1.125rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>طلب المنتج</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="products.html">المنتجات</a></li>
+                    <li><a href="#">اتصل بنا</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="product-details">
+            <div class="container">
+                <h2 id="productName">اسم المنتج</h2>
+                <img id="productImage" src="fallback-image.jpg" alt="صورة المنتج">
+                <p id="productDescription">الوصف</p>
+                <p id="productPrice">السعر</p>
+            </div>
+        </section>
+        <section class="purchase-form">
+            <div class="container">
+                <h2>تفاصيل الطلب</h2>
+                <form id="purchaseForm">
+                    <label for="clientName">الاسم الكامل:</label>
+                    <input type="text" id="clientName" placeholder="أدخل اسمك الكامل" required>
+                    <span id="clientNameError" class="error"></span>
+
+                    <label for="phoneNumber">رقم الهاتف:</label>
+                    <input type="tel" id="phoneNumber" placeholder="أدخل رقم هاتفك" pattern="\d{10}" maxlength="10" title="رقم الهاتف يجب أن يتكون من 10 أرقام" required>
+                    <span id="phoneNumberError" class="error"></span>
+
+                    <label for="city">الولاية:</label>
+                    <input type="text" id="city" placeholder="أدخل الولاية" required>
+                    <span id="cityError" class="error"></span>
+
+                    <label for="address">العنوان:</label>
+                    <input type="text" id="address" placeholder="أدخل عنوانك" required>
+                    <span id="addressError" class="error"></span>
+
+                    <button type="submit">إرسال الطلب</button>
+                    <div id="successMessage" class="success-message"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 متجر إلكتروني. جميع الحقوق محفوظة.</p>
+            
+
+        </div>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get product details from query parameters
+            const params = new URLSearchParams(window.location.search);
+            const productName = params.get('productName');
+            const productImage = params.get('productImage');
+            const productDescription = params.get('productDescription');
+            const productPrice = params.get('productPrice');
+
+            const productNameElement = document.getElementById('productName');
+            const productImageElement = document.getElementById('productImage');
+            const productDescriptionElement = document.getElementById('productDescription');
+            const productPriceElement = document.getElementById('productPrice');
+
+            if (productNameElement) productNameElement.textContent = productName || 'اسم المنتج غير متوفر';
+            if (productImageElement) productImageElement.src = productImage || 'fallback-image.jpg';
+            if (productDescriptionElement) productDescriptionElement.textContent = productDescription || 'الوصف غير متوفر';
+            if (productPriceElement) productPriceElement.textContent = productPrice || 'السعر غير متوفر';
+
+            // Form validation
+            const purchaseForm = document.getElementById('purchaseForm');
+            purchaseForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                // Clear previous errors
+                document.querySelectorAll('.error').forEach(span => span.textContent = '');
+
+                let valid = true;
+                const clientName = document.getElementById('clientName');
+                const phoneNumber = document.getElementById('phoneNumber');
+                const city = document.getElementById('city');
+                const address = document.getElementById('address');
+
+                if (clientName.value.trim() === '') {
+                    document.getElementById('clientNameError').textContent = 'الاسم الكامل مطلوب.';
+                    valid = false;
+                }
+
+                if (!phoneNumber.value.match(/^\d{10}$/)) {
+                    document.getElementById('phoneNumberError').textContent = 'رقم الهاتف يجب أن يتكون من 10 أرقام.';
+                    valid = false;
+                }
+
+                if (city.value.trim() === '') {
+                    document.getElementById('cityError').textContent = 'الولاية مطلوبة.';
+                    valid = false;
+                }
+
+                if (address.value.trim() === '') {
+                    document.getElementById('addressError').textContent = 'العنوان مطلوب.';
+                    valid = false;
+                }
+
+                if (valid) {
+                    document.getElementById('successMessage').textContent = 'تم تقديم طلبك بنجاح!';
+                    purchaseForm.reset();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
